@@ -58,7 +58,7 @@ public class StudentJdbcTemplateImpl implements StudentJdbcTemplate {
 
     @Override
     public List<Student> findAll() {
-        return null;
+       return namedParameterJdbcTemplate.query(SQL_SELECT_ALL,studentRowMapper());
     }
 
     @Override

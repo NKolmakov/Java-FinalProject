@@ -25,6 +25,9 @@ public class GroupJdbcTemplateImpl implements GroupJdbcTemplate {
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
     //language=SQL
     private static final String SQL_FIND_BY_NAME = "SELECT * FROM `group`WHERE UPPER(group_name) LIKE (UPPER(:groupName))";
+
+    //language=SQL
+    private static final String SQL_SELECT_ALL = "SELECT * FROM `group`";
     @Override
     public Optional<Group> find(Long id) {
         return Optional.empty();
@@ -47,7 +50,7 @@ public class GroupJdbcTemplateImpl implements GroupJdbcTemplate {
 
     @Override
     public List<Group> findAll() {
-        return null;
+       return namedParameterJdbcTemplate.query(SQL_SELECT_ALL,groupRowMapper());
     }
 
     @Override

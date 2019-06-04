@@ -1,6 +1,7 @@
 package com.epam.kolmakov.controllers;
 
 import com.epam.kolmakov.config.WebConfig;
+import com.epam.kolmakov.db.models.Group;
 import com.epam.kolmakov.db.models.Student;
 import com.epam.kolmakov.forms.StudentForm;
 import com.epam.kolmakov.services.StudentService;
@@ -10,6 +11,9 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Controller
 @RequestMapping(value = "/login")
 public class StudentController {
@@ -18,14 +22,16 @@ public class StudentController {
     private StudentService studentService;
 
     @RequestMapping(method = RequestMethod.POST)
-    public String signUp(StudentForm studentForm, ModelMap modelMap) {
+    public String signUp(StudentForm studentForm,ModelMap modelMap) {
         Student student = Student.from(studentForm);
-        try {
+//        try {
             studentService.saveStudent(student);
-        }catch (Exception ex){
-            WebConfig.LOGGER.error(ex.getStackTrace());
-            return "error";
-        }
+//        }catch (Exception ex){
+//            WebConfig.LOGGER.error(ex.getStackTrace());
+//            return "error";
+//        }
+        List<Student> students = studentService.getStudents();
+        modelMap.addAttribute("students",students);
         return "login";
     }
 }
