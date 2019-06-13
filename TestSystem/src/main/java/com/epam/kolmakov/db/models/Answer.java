@@ -9,8 +9,16 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Answer {
-    private Long id;
+    private Long answerId;
+    private Long questionId;
     private Question question;
-    private String text;
+    private String answerText;
     private boolean status;
+    private boolean checked;
+
+    public Answer(Long answerId, String text, boolean status) {
+        this.answerId = answerId;
+        this.answerText = text;
+        this.status = status;
+    }
 }

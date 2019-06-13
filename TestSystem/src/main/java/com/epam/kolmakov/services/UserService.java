@@ -46,6 +46,10 @@ public class UserService {
         return userDaoImpl.findUserByLogin(user.getLogin());
     }
 
+    public Optional<User> getUserById(Long id){
+        return userDaoImpl.findById(id);
+    }
+
     private boolean userExists(User user) {
         if(userDaoImpl.findUserByLogin(user.getLogin()).isPresent()){
             return true;

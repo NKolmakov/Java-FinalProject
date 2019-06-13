@@ -27,7 +27,7 @@ public class UserDaoImpl implements UserDao {
             "INSERT INTO user(first_name, last_name,role,group_id,login,password)" +
                     "VALUES (:firstName,:lastName,:role,:groupId,:login,:password)";
     //language=SQL
-    private static final String SQL_SELECT_BY_LOGIN = "SELECT * FROM user WHERE UPPER(login) LIKE (UPPER(:login))";
+    private static final String SQL_SELECT_BY_LOGIN = "SELECT * FROM user WHERE binary login = :login";
     //language=SQL
     private static final String SQL_SELECT_BY_ROLE = "SELECT * FROM user WHERE UPPER(role) LIKE (UPPER(:role))";
     //language=SQL

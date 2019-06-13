@@ -1,16 +1,12 @@
 package com.epam.kolmakov.config;
 
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
-import org.springframework.web.servlet.HandlerMapping;
-import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.i18n.CookieLocaleResolver;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
@@ -48,7 +44,10 @@ public class AppConfig {
     public ReloadableResourceBundleMessageSource messageSource(){
         ReloadableResourceBundleMessageSource source = new ReloadableResourceBundleMessageSource();
         source.setDefaultEncoding("UTF-8");
-        source.addBasenames("classpath:/locales/registration","classpath:/locales/authorization","classpath:/locales/error");
+        source.addBasenames("classpath:/locales/registration",
+                "classpath:/locales/authorization",
+                "classpath:/locales/error",
+                "classpath:/locales/mainStudent");
         return source;
     }
 
