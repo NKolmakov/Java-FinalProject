@@ -9,7 +9,10 @@ import com.epam.kolmakov.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
@@ -25,7 +28,7 @@ public class StudentController {
     @RequestMapping(value = "/student")
     public String getMainStudentForm(HttpSession session,ModelMap modelMap){
         User user = (User)session.getAttribute("user");
-        if (user != null && userService.isAuthorizationCorrect(user)) {
+        if (user != null && user.isAuthorized()) {
             if (user.getRole().equalsIgnoreCase("student")) {
                 modelMap.addAttribute("user",user);
                 return "mainStudent";
@@ -39,7 +42,7 @@ public class StudentController {
         //todo:fill
         List<Test> tests = new ArrayList<>();
         List<Question> questions = new LinkedList<>();
-        questions.add(new Question(1L,"text",null));
+        questions.add(new Question(1L,"text"));
         tests.add(new Test(1L,"test to check test","desription",questions));
         tests.add(new Test(2L,"test to check test2","desription",questions));
         modelMap.addAttribute("tests",tests);
@@ -73,7 +76,7 @@ public class StudentController {
         questions.add(new Question(3L,"text3",answers3));
         modelMap.addAttribute("questions",questions);
         modelMap.addAttribute("questionForm",new AnswerLogForm());
-        return "takeTest";
+        return "passTest";
     }
 
     @RequestMapping(value = "/takeTest",method = RequestMethod.POST)
@@ -107,6 +110,6 @@ public class StudentController {
         questions.add(new Question(2L,"text2",answers2));
         questions.add(new Question(3L,"text3",answers3));
         modelMap.addAttribute("questions",questions);
-        return "takeTest";
+        return "passTest";
     }
 }

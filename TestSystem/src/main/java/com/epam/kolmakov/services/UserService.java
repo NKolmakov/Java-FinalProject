@@ -6,6 +6,7 @@ import com.epam.kolmakov.db.models.Group;
 import com.epam.kolmakov.db.models.Roles;
 import com.epam.kolmakov.db.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,6 +21,9 @@ public class UserService {
     @Autowired
     private GroupDao groupDaoImpl;
 
+    @Autowired
+    private BCryptPasswordEncoder encoder;
+
     public boolean saveUser(User user) {
         String groupName = user.getGroupName();
         Optional<Group> group = groupDaoImpl.findGroupByName(groupName);
@@ -31,6 +35,8 @@ public class UserService {
 
         if(!userExists(user)) {
             user.setRole(Roles.STUDENT.toString());
+            String encodedPassword = encoder.encode(user.getPassword());
+            user.setPassword(encodedPassword);
             userDaoImpl.save(user);
             return true;
         }
@@ -58,14 +64,16 @@ public class UserService {
         return false;
     }
 
-    public boolean isAuthorizationCorrect(User user) {
+    public Optional<User> checkAuthorization(User user) {
         Optional<User> userOptional = userDaoImpl.findUserByLogin(user.getLogin());
+        String encodedPassword = encoder.encode(user.getPassword());
         if(userOptional.isPresent()){
             User userFromDb = userOptional.get();
-            if(userFromDb.getPassword().equals(user.getPassword())){
-                return true;
+            if(encoder.matches(user.getPassword(),userFromDb.getPassword())){
+                userFromDb.setAuthorized(true);
+                return Optional.of(userFromDb);
             }
         }
-        return false;
+        return Optional.empty();
     }
 }

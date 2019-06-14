@@ -30,10 +30,10 @@ public class AppInit extends AbstractAnnotationConfigDispatcherServletInitialize
     }
 
     //TODO: локализация ошибки
-    //TODO: сделать хэширование паролей на входе
     //TODO: сообщение о неправильной регистрации выводить как импорт страницы регистрации плюс сверху локализированная надпись об ошибке
     //TODO: пример
     // <jsp:include page="_menu.jsp" />
     //    <h1>Message : ${message}</h1>
     //todo: сделать страницы сообщений об ошибке
+    //todo: script.js допилить CreateTestForm поля
 }

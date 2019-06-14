@@ -1,7 +1,6 @@
 package com.epam.kolmakov.db.models;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -11,8 +10,10 @@ import lombok.NoArgsConstructor;
 public class Answer {
     private Long answerId;
     private Long questionId;
+    private Integer questionNumber;
     private Question question;
     private String answerText;
+    private Integer answerNumber;
     private boolean status;
     private boolean checked;
 

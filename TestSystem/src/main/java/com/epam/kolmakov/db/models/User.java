@@ -19,6 +19,7 @@ public class User {
     private String password;
     private Long groupId;
     private String groupName;
+    private boolean isAuthorized;
     private Group group;
 
     public User(Long id, String firstName, String lastName,String role, String login, String password, Long groupId) {

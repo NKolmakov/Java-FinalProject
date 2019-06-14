@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.i18n.CookieLocaleResolver;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
@@ -44,10 +45,12 @@ public class AppConfig {
     public ReloadableResourceBundleMessageSource messageSource(){
         ReloadableResourceBundleMessageSource source = new ReloadableResourceBundleMessageSource();
         source.setDefaultEncoding("UTF-8");
-        source.addBasenames("classpath:/locales/registration",
+        source.addBasenames(
+                "classpath:/locales/registration",
                 "classpath:/locales/authorization",
                 "classpath:/locales/error",
-                "classpath:/locales/mainStudent");
+                "classpath:/locales/mainStudent",
+                "classpath:/locales/mainTutor");
         return source;
     }
 
@@ -63,5 +66,10 @@ public class AppConfig {
         LocaleChangeInterceptor localeChangeInterceptor = new LocaleChangeInterceptor ();
         localeChangeInterceptor.setParamName("lang");
         return localeChangeInterceptor;
+    }
+
+    @Bean
+    public BCryptPasswordEncoder encoder(){
+        return new BCryptPasswordEncoder();
     }
 }
