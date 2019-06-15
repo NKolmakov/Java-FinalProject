@@ -22,4 +22,11 @@ public class Answer {
         this.answerText = text;
         this.status = status;
     }
+
+    public Answer(Long answerId, Long questionId, String answerText, boolean status) {
+        this.answerId = answerId;
+        this.questionId = questionId;
+        this.answerText = answerText;
+        this.status = status;
+    }
 }

@@ -17,14 +17,14 @@
     <div>
         <h2><locale:message code="formAuth.name"/></h2>
         <div class="lang">
-            <a href="${pageContext.request.contextPath}?lang=en">EN</a>
-            <a href="${pageContext.request.contextPath}?lang=ru">RU</a>
+            <a href="${pageContext.request.contextPath}?lang=en"><img id="en" src="/resources/images/eng.png"></a>
+            <a href="${pageContext.request.contextPath}?lang=ru"><img id="ru" src="/resources/images/rus.jpg"></a>
         </div>
     </div>
     <div>
         <form action="signIn" method="post">
-            <input type="text" id="login" name="login" placeholder="<locale:message code="label.login"/>"/>
-            <input type="password" id="password" name="password" placeholder="<locale:message code="label.password"/>"/>
+            <input type="text" id="login" name="login" placeholder="<locale:message code="label.login"/>" required/>
+            <input type="password" id="password" name="password" placeholder="<locale:message code="label.password"/>" required/>
             <input type="submit" value="<locale:message code="button.enter"/>"/>
         </form>
     </div>

@@ -14,6 +14,7 @@ public class Question {
     private Integer number;
     private String text;
     private List<Answer> answers;
+    private boolean isManyRightAnswers;
 
     public Question(Integer number, String text) {
         this.number = number;

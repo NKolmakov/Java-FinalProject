@@ -14,4 +14,21 @@ public class Test {
     private String name;
     private String description;
     private List<Question> questions;
+
+    public Test(String name, String description, List<Question> questions) {
+        this.name = name;
+        this.description = description;
+        this.questions = questions;
+    }
+
+    public Test(String name, String description) {
+        this.name = name;
+        this.description = description;
+    }
+
+    public Test(Long id, String name, String description) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+    }
 }

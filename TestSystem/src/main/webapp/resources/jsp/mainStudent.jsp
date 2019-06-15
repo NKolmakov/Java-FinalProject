@@ -25,8 +25,12 @@
 
 <main role="main">
     <div class="home-page">
-        <h2>${user.firstName} ${user.lastName}</h2>
-<%--        code to show form with test list--%>
+        <h2>
+            <img id="accountIcon" src="/resources/images/student1.png">
+            <div id="header-caption">${user.firstName} ${user.lastName}</div>
+            <div id="header-role">${user.role}</div>
+        </h2>
+        <%--        code to show form with test list--%>
         <c:if test="${passTest.equalsIgnoreCase('true')}">
             <c:choose>
                 <c:when test="${tests.size() > 0}">
@@ -46,9 +50,10 @@
             </c:choose>
         </c:if>
     </div>
-    <footer>
-        © 2019 Kolmakov Nikita. All rights reserved.
-    </footer>
+
 </main>
+<footer>
+    © 2019 Kolmakov Nikita. All rights reserved.
+</footer>
 </body>
 </html>

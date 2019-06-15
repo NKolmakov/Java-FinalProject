@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -14,6 +15,18 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 public class CreateTestForm {
+    private String testName;
+    private String testDescription;
     private List<Question> questions;
     private List<Answer> answers;
+
+    public List<Answer> getAnswersByQuestionNumber(Integer questionNumber){
+        List<Answer> answerList = new ArrayList<>();
+        for (Answer answer:answers){
+            if(answer.getQuestionNumber().equals(questionNumber)){
+                answerList.add(answer);
+            }
+        }
+        return answerList;
+    }
 }

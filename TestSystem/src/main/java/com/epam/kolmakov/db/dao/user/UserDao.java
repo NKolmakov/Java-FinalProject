@@ -1,6 +1,6 @@
 package com.epam.kolmakov.db.dao.user;
 
-import com.epam.kolmakov.db.dao.CrudDao;
+import com.epam.kolmakov.db.dao.abstractDao.CrudDao;
 import com.epam.kolmakov.db.models.User;
 
 import java.util.List;

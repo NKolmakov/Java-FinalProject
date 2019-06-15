@@ -1,4 +1,4 @@
-package com.epam.kolmakov.db.dao;
+package com.epam.kolmakov.db.dao.abstractDao;
 
 import java.util.List;
 import java.util.Optional;

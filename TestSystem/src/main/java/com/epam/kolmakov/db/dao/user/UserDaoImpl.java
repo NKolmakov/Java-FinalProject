@@ -1,6 +1,7 @@
 package com.epam.kolmakov.db.dao.user;
 
 import com.epam.kolmakov.config.WebConfig;
+import com.epam.kolmakov.db.dao.abstractDao.AbstractDao;
 import com.epam.kolmakov.db.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -14,7 +15,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @Component
-public class UserDaoImpl implements UserDao {
+public class UserDaoImpl extends AbstractDao<User> implements UserDao {
 
     //language=SQL
     private static final String SQL_SELECT_ALL = "SELECT * FROM user";
@@ -50,7 +51,6 @@ public class UserDaoImpl implements UserDao {
     public List<User> findAllByFirstName(String firstName) {
         Map<String, Object> params = new HashMap<>();
         params.put("firstName", firstName);
-
         return namedParameterJdbcTemplate.query(SQL_SELECT_BY_FIRST_NAME, params, userRowMapper());
     }
 
@@ -74,16 +74,9 @@ public class UserDaoImpl implements UserDao {
         return namedParameterJdbcTemplate.query(SQL_SELECT_BY_ROLE, params, userRowMapper());
     }
 
-    @Override
     public Optional<User> findById(Long id) {
-        Map<String, Long> params = new HashMap<>();
-        params.put("id", id);
-        List<User> users = namedParameterJdbcTemplate.query(SQL_SELECT_BY_ID, params, userRowMapper());
-        if (users.isEmpty()) {
-            return Optional.empty();
-        }
-
-        return Optional.of(users.get(0));
+        Map<String,Long> params = new HashMap<>();
+        return findById(SQL_SELECT_BY_ID,params,userRowMapper());
     }
 
     @Override
@@ -114,16 +107,7 @@ public class UserDaoImpl implements UserDao {
         params.put("role",model.getRole());
         params.put("login", model.getLogin());
         params.put("password", model.getPassword());
-        if (model.getGroup() != null) {
-            params.put("groupId", model.getGroup().getId());
-        }
-        try {
-            namedParameterJdbcTemplate.update(SQL_INSERT_USER, params);
-            return true;
-        } catch (DataAccessException ex) {
-            WebConfig.LOGGER.error(ex.getStackTrace());
-        }
-        return false;
+        return save(SQL_INSERT_USER,params);
     }
 
     @Override
@@ -135,16 +119,7 @@ public class UserDaoImpl implements UserDao {
         params.put("login", model.getLogin());
         params.put("password", model.getPassword());
         params.put("groupId", model.getGroupId());
-
-        if (findById(model.getId()).isPresent()) {
-            try {
-                namedParameterJdbcTemplate.update(SQL_UPDATE_BY_ID, params);
-                return true;
-            } catch (DataAccessException ex) {
-                WebConfig.LOGGER.error(ex.getStackTrace());
-            }
-        }
-        return false;
+        return update(SQL_UPDATE_BY_ID,params);
     }
 
     private RowMapper<User> userRowMapper() {
