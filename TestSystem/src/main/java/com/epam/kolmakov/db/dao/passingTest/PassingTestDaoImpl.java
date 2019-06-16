@@ -16,8 +16,8 @@ public class PassingTestDaoImpl extends AbstractDao<PassingTest> implements Pass
 
     //language=SQL
     private static final String SQL_INSERT_INTO_PASSING_TEST = "INSERT " +
-            "INTO passing_test(test_id, user_id)" +
-            "VALUES (:testId, :userId)";
+            "INTO passing_test(test_id, user_id,right_questions_amount,wrong_questions_amount)" +
+            "VALUES (:testId, :userId, :rightQuestions, :wrongQuestions)";
 
     @Override
     public Optional<PassingTest> findById(Long id) {
@@ -29,6 +29,8 @@ public class PassingTestDaoImpl extends AbstractDao<PassingTest> implements Pass
         Map<String, Object> params = new HashMap<>();
         params.put("testId", model.getTestId());
         params.put("userId", model.getUserId());
+        params.put("rightQuestions",model.getRightQuestionsAmount());
+        params.put("wrongQuestions",model.getWrongQuestionsAmount());
         return save(SQL_INSERT_INTO_PASSING_TEST, params);
     }
 
@@ -52,7 +54,9 @@ public class PassingTestDaoImpl extends AbstractDao<PassingTest> implements Pass
             return new PassingTest(
                     resultSet.getLong("id"),
                     resultSet.getLong("test_id"),
-                    resultSet.getLong("user_id")
+                    resultSet.getLong("user_id"),
+                    resultSet.getShort("right_questions_amount"),
+                    resultSet.getShort("wrong_questions_amount")
             );
         };
     }

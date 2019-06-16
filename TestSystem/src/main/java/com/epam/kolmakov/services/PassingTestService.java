@@ -10,7 +10,9 @@ public class PassingTestService {
     @Autowired
     private PassingTestDao passingTestDao;
 
-    public boolean save(PassingTest passingTest){
-       return passingTestDao.save(passingTest);
+    public boolean save(PassingTest passingTest) {
+
+        return passingTestDao.save(passingTest);
     }
+
 }

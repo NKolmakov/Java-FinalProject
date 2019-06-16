@@ -10,11 +10,7 @@
 </head>
 <body>
 <div class="home-page">
-    <h2>
-        <img id="accountIcon" src="teacher.png">
-        ${user.firstName} ${user.lastName}
-        <label>role</label>
-    </h2>
+    <jsp:include page="homeHeader.jsp"/>
 </div>
 <div class="test">
     <form action="/passTest" method="post" modelAttribute="answerLogForm">
@@ -31,8 +27,8 @@
                             <input hidden name="answers[${counter}].questionId" value="${question.id}">
                             <input hidden name="answers[${counter}].answerId" value="${answer.answerId}">
                             <input hidden name="answers[${counter}].right" value="${answer.right}"/>
-                            <input type="radio" class="answer" id="${answer.answerId}" name="answers[${counter}].checked">
-                            <label class="answer" for="${answer.answerId}">${answer.answerText}</label><br>
+                            <input type="radio" class="answers" id="${answer.answerId}" name="answers[${counter}].checked">
+                            <label class="answers" for="${answer.answerId}">${answer.answerText}</label><br>
                             <input hidden value="${counter = counter+1}"/>
                         </c:when>
                         <c:otherwise>
@@ -40,8 +36,8 @@
                             <input hidden name="answers[${counter}].questionId" value="${question.id}"/>
                             <input hidden name="answers[${counter}].answerId" value="${answer.answerId}"/>
                             <input hidden name="answers[${counter}].right" value="${answer.right}"/>
-                            <input type="checkbox" class="answer" id="${answer.answerId}" name="answers[${counter}].checked"/>
-                            <label class="answer" for="${answer.answerId}">${answer.answerText}</label><br>
+                            <input type="checkbox" class="answers" id="${answer.answerId}" name="answers[${counter}].checked"/>
+                            <label class="answers" for="${answer.answerId}">${answer.answerText}</label><br>
                             <input hidden value="${counter = counter+1}"/>
                         </c:otherwise>
                     </c:choose>

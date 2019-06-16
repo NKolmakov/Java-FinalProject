@@ -71,11 +71,16 @@ public class StudentController {
             }
         }
         User user = (User) session.getAttribute("user");
+        Optional<Test> optionalTest = testService.getTestById(testId);
         PassingTest passingTest = new PassingTest();
         passingTest.setTestId(testId);
         if (user != null) {
             Long userId = user.getId();
             passingTest.setUserId(userId);
+        }
+        if(optionalTest.isPresent()){
+            Test test = optionalTest.get();
+            passingTest.setTest(test);
         }
         if (passingTestService.save(passingTest)) {
             modelMap.addAttribute("testSaved", "true");
