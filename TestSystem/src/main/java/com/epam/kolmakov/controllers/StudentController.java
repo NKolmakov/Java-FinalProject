@@ -11,8 +11,6 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,11 +25,11 @@ public class StudentController {
     private PassingTestService passingTestService;
 
     @RequestMapping(value = "/student")
-    public String getMainStudentForm(HttpSession session,ModelMap modelMap){
-        User user = (User)session.getAttribute("user");
+    public String getMainStudentForm(HttpSession session, ModelMap modelMap) {
+        User user = (User) session.getAttribute("user");
         if (user != null && user.isAuthorized()) {
             if (user.getRole().equalsIgnoreCase("student")) {
-                modelMap.addAttribute("user",user);
+                modelMap.addAttribute("user", user);
                 return "mainStudent";
             }
         }
@@ -39,48 +37,51 @@ public class StudentController {
     }
 
     @RequestMapping(value = "/selectTest")
-    public String selectTest(ModelMap modelMap){
-        List<Test> tests = new ArrayList<>();
-        List<Question> questions = new LinkedList<>();
-        questions.add(new Question(1L,"text"));
-        tests.add(new Test(1L,"test to check test","desription",questions));
-        tests.add(new Test(2L,"test to check test2","desription",questions));
-        modelMap.addAttribute("tests",tests);
-        modelMap.addAttribute("selectTest","true");
-        return "mainStudent";
+    public String selectTest(ModelMap modelMap, HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        if (user != null) {
+            List<Test> availableTests = testService.getNotPassedTestByUser(user);
+            modelMap.addAttribute("tests", availableTests);
+            modelMap.addAttribute("selectTest", "true");
+            return "mainStudent";
+        }
+        return "error";
     }
 
     @RequestMapping(value = "/takeTest")
-    public String getTest(@RequestParam(name = "selectedTest") Long testId, ModelMap modelMap){
+    public String getTest(@RequestParam(name = "selectedTest") Long testId, ModelMap modelMap) {
         Optional<Test> optionalTest = testService.getTestById(testId);
-        if(optionalTest.isPresent()) {
+        if (optionalTest.isPresent()) {
             Test test = optionalTest.get();
-            modelMap.addAttribute("test",test);
+            modelMap.addAttribute("counter",0);
+            modelMap.addAttribute("test", test);
             return "passTest";
         }
         return "error";
     }
 
-    @RequestMapping(value = "/passTest",method = RequestMethod.POST)
-    public String takeTest(@ModelAttribute(name = "questionForm") AnswerLogForm answerLogForm,HttpSession session,ModelMap modelMap){
+    @RequestMapping(value = "/passTest", method = RequestMethod.POST)
+    public String takeTest(@ModelAttribute(name = "questionForm") AnswerLogForm answerLogForm, HttpSession session, ModelMap modelMap) {
         List<Answer> answers = answerLogForm.getAnswers();
         Long testId = answerLogForm.getTestId();
-        for (Answer answer:answers){
-            AnswerLog answerLog = new AnswerLog(answer.getAnswerId(),answer.isChecked());
-            answerLogService.saveAnswerLog(answerLog);
+        if (answers != null) {
+            for (Answer answer : answers) {
+                AnswerLog answerLog = new AnswerLog(answer.getAnswerId(), answer.isChecked());
+                answerLogService.saveAnswerLog(answerLog);
+            }
         }
-        User user = (User)session.getAttribute("user");
+        User user = (User) session.getAttribute("user");
         PassingTest passingTest = new PassingTest();
         passingTest.setTestId(testId);
-        if(user != null){
+        if (user != null) {
             Long userId = user.getId();
             passingTest.setUserId(userId);
         }
-        if(passingTestService.save(passingTest)) {
-            modelMap.addAttribute("testSaved","true");
+        if (passingTestService.save(passingTest)) {
+            modelMap.addAttribute("testSaved", "true");
             return "mainStudent";
-        }else{
-            modelMap.addAttribute("testSaved","false");
+        } else {
+            modelMap.addAttribute("testSaved", "false");
             return "mainStudent";
         }
     }

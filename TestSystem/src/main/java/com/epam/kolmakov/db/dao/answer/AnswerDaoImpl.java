@@ -57,6 +57,7 @@ public class AnswerDaoImpl extends AbstractDao<Answer> implements AnswerDao {
     @Override
     public List<Answer> getAnswersByQuestionId(Long id) {
         Map<String,Long> params = new HashMap<>();
+        params.put("id",id);
         return namedParameterJdbcTemplate.query(SQL_SELECT_BY_QUESTION_ID,params,answerRowMapper());
     }
 
