@@ -35,5 +35,7 @@ public class AppInit extends AbstractAnnotationConfigDispatcherServletInitialize
     // <jsp:include page="_menu.jsp" />
     //    <h1>Message : ${message}</h1>
     //todo: сделать страницы сообщений об ошибке
-    //todo: script.js допилить CreateTestForm поля
+    //todo: сделать проверку теста у пользователя
+    //todo:сделать статистику
+    //todo: сделать проверку перехода по урлам
 }

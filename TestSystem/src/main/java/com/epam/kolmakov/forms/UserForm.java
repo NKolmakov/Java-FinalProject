@@ -7,7 +7,7 @@ public class UserForm {
     private String firstName;
     private String lastName;
     private String role;
-    private String groupName;
+    private Long groupId;
     private String login;
     private String password;
 }

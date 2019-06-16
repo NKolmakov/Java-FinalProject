@@ -11,6 +11,7 @@ import com.epam.kolmakov.db.models.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -51,11 +52,39 @@ public class TestService {
         return true;
     }
 
+    /**
+     * <p>Method to get test from database</p>
+     * @param id - test identifier
+     * @return <i>Optional test</i> with it's questions and answers or <i>Optional.empty</i> if no test exists
+     */
     public Optional<Test> getTestById(Long id){
-        return testDaoImpl.findById(id);
-    }
+        Optional<Test> optionalTest = testDaoImpl.findById(id);
+        if (optionalTest.isPresent()){
+            Test test = optionalTest.get();
+            List<Question> questions = questionDao.getQuestionsByTestId(id);
 
-    private Long saveAndGetGeneratedId(Test test){
-        return testDaoImpl.saveAndGetId(test);
+            //for each found question look for questions
+            for (Question question:questions){
+                List<Answer> answers = answerDao.getAnswersByQuestionId(question.getId());
+
+                //if questions exist check quantity of right answers
+                byte rightAnsAmount = 0;
+                for (int i = 0; i < answers.size(); i++) {
+                    if(rightAnsAmount <= 1){
+                        if(answers.get(i).isRight()){
+                            rightAnsAmount++;
+                        }
+                    }else{
+                        //kind of break for current loop
+                        i=answers.size();
+                        question.setManyRightAnswers(true);
+                    }
+                }
+                question.setAnswers(answers);
+            }
+            test.setQuestions(questions);
+            return Optional.of(test);
+        }
+        return Optional.empty();
     }
 }

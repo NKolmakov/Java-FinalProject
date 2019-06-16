@@ -37,9 +37,9 @@
             <input type="text" id="lastName" name="lastName" placeholder="<locale:message code="label.lastName"/>" required/>
             <input type="text" id="login" name="login" placeholder="<locale:message code="label.login"/>" required/>
             <input type="password" id="password" name="password" placeholder="<locale:message code="label.password"/>" required>
-            <select name="groupName">
+            <select name="groupId">
                 <c:forEach items="${groups}" var="group">
-                    <option name="${group.id}" value="${group.groupName}">${group.groupName}</option>
+                    <option name="${group.id}" value="${group.id}">${group.groupName}</option>
                 </c:forEach>
             </select>
             <input type="submit" value="<locale:message code="button.name"/>"/>

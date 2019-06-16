@@ -107,6 +107,7 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
         params.put("role",model.getRole());
         params.put("login", model.getLogin());
         params.put("password", model.getPassword());
+        params.put("groupId",model.getGroupId());
         return save(SQL_INSERT_USER,params);
     }
 

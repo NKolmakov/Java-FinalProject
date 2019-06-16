@@ -51,8 +51,9 @@
     </h2>
 </div>
 <div class="test">
-    <form action="/takeTest" method="post" modelAttribute="answerLogForm">
-        <c:forEach items="${questions}" var="question" varStatus="status">
+    <form action="/passTest" method="post" modelAttribute="answerLogForm">
+        <input hidden name="testId" value="${test.id}">
+        <c:forEach items="${test.questions}" var="question" varStatus="status">
             <div class="question">
                 <input hidden value="${status.count}">
                 <input hidden name="questions[${status.index}].id" value="${question.id}">

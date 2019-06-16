@@ -18,7 +18,6 @@ public class User {
     private String login;
     private String password;
     private Long groupId;
-    private String groupName;
     private boolean isAuthorized;
     private Group group;
 
@@ -39,7 +38,7 @@ public class User {
                 .role(userForm.getRole())
                 .login(userForm.getLogin())
                 .password(userForm.getPassword())
-                .groupName(userForm.getGroupName())
+                .groupId(userForm.getGroupId())
                 .build();
 
     }

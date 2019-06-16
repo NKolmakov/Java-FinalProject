@@ -9,7 +9,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class AnswerLog {
     private Long id;
-    private PassingTest passingTest;
+    private Long answerId;
     private Answer answer;
     private boolean checked;
+
+    public AnswerLog(Long answerId, boolean checked) {
+        this.answerId = answerId;
+        this.checked = checked;
+    }
 }

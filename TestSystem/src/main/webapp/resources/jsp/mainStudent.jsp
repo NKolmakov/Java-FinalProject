@@ -31,10 +31,10 @@
             <div id="header-role">${user.role}</div>
         </h2>
         <%--        code to show form with test list--%>
-        <c:if test="${passTest.equalsIgnoreCase('true')}">
+        <c:if test="${selectTest.equalsIgnoreCase('true')}">
             <c:choose>
                 <c:when test="${tests.size() > 0}">
-                    <form action="/passTest" method="post" >
+                    <form action="/takeTest" method="post">
                         <h2><label for="availableTests"><locale:message code="label.availableTests"/></label></h2>
                         <select id="availableTests" name="selectedTest">
                             <c:forEach items="${tests}" var="test">
@@ -49,6 +49,19 @@
                 </c:otherwise>
             </c:choose>
         </c:if>
+        <%--    message about successful saved test    --%>
+        <c:choose>
+            <c:when test="${testSaved.equalsIgnoreCase('true')}">
+                <div class="message">
+                    <p style="color: #00ff00; font-size: 15px;"><locale:message code="label.testSaved"/></p>
+                </div>
+            </c:when>
+            <c:when test="${testSaved.equalsIgnoreCase('false')}">
+                <div class="messsage">
+                    <p style="color: #ff0000; font-size: 15px;"><locale:message code="label.testNotSaved"/></p>
+                </div>
+            </c:when>
+        </c:choose>
     </div>
 
 </main>

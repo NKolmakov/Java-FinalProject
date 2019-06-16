@@ -1,9 +1,8 @@
 package com.epam.kolmakov.db.dao.group;
 
+import com.epam.kolmakov.db.dao.abstractDao.AbstractDao;
 import com.epam.kolmakov.db.models.Group;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
@@ -12,18 +11,18 @@ import java.util.Map;
 import java.util.Optional;
 
 @Component
-public class GroupDaoImpl implements GroupDao {
-
-    @Autowired
-    private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+public class GroupDaoImpl extends AbstractDao<Group> implements GroupDao {
     //language=SQL
     private static final String SQL_FIND_BY_NAME = "SELECT * FROM `group`WHERE UPPER(group_name) LIKE (UPPER(:groupName))";
-
     //language=SQL
     private static final String SQL_SELECT_ALL = "SELECT * FROM `group`";
+    //language=SQL
+    private static final String SQL_SELECT_BY_ID = "SELECT * FROM `group` WHERE id = :id";
     @Override
     public Optional<Group> findById(Long id) {
-        return Optional.empty();
+        Map<String,Long> params = new HashMap<>();
+        params.put("id",id);
+        return findById(SQL_SELECT_BY_ID,params,groupRowMapper());
     }
 
     @Override

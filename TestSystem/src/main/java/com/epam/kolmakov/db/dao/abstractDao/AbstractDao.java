@@ -13,7 +13,7 @@ import java.util.Optional;
 
 public abstract class AbstractDao<T> {
     @Autowired
-    private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+    protected NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     public Optional<T> findById(String sql, Map<String, Long> params, RowMapper<T> rowMapper) {
         List<T> objects = namedParameterJdbcTemplate.query(sql, params, rowMapper);
@@ -28,7 +28,7 @@ public abstract class AbstractDao<T> {
             namedParameterJdbcTemplate.update(sql, params);
             return true;
         } catch (Exception ex) {
-            WebConfig.LOGGER.warn(ex.getStackTrace());
+            WebConfig.LOGGER.warn(ex);
             return false;
         }
     }
@@ -38,7 +38,7 @@ public abstract class AbstractDao<T> {
             namedParameterJdbcTemplate.update(sql, params);
             return true;
         } catch (Exception ex) {
-            WebConfig.LOGGER.warn(ex.getStackTrace());
+            WebConfig.LOGGER.warn(ex);
         }
         return false;
     }
@@ -49,7 +49,7 @@ public abstract class AbstractDao<T> {
             namedParameterJdbcTemplate.update(sql, params);
             return true;
         } catch (Exception ex) {
-            WebConfig.LOGGER.warn(ex.getStackTrace());
+            WebConfig.LOGGER.warn(ex);
             return false;
         }
     }
@@ -71,7 +71,7 @@ public abstract class AbstractDao<T> {
         try {
             result = keyHolder.getKey().longValue();
         }catch (NullPointerException ex){
-            WebConfig.LOGGER.warn(ex.getStackTrace());
+            WebConfig.LOGGER.warn(ex);
         }
         return result;
     }

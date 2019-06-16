@@ -25,8 +25,8 @@ public class UserService {
     private BCryptPasswordEncoder encoder;
 
     public boolean saveUser(User user) {
-        String groupName = user.getGroupName();
-        Optional<Group> group = groupDaoImpl.findGroupByName(groupName);
+        Long groupId = user.getGroupId();
+        Optional<Group> group = groupDaoImpl.findById(groupId);
 
         if (group.isPresent()) {
             Group group1 = group.get();
@@ -37,8 +37,9 @@ public class UserService {
             user.setRole(Roles.STUDENT.toString());
             String encodedPassword = encoder.encode(user.getPassword());
             user.setPassword(encodedPassword);
-            userDaoImpl.save(user);
-            return true;
+            if(userDaoImpl.save(user)) {
+                return true;
+            }
         }
 
         return false;

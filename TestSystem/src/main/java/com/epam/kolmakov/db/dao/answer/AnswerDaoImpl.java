@@ -21,6 +21,8 @@ public class AnswerDaoImpl extends AbstractDao<Answer> implements AnswerDao {
             "VALUES (:questionId,:text,:isCorrect)";
     //language=SQL
     private static final String SQL_SELECT_ALL = "SELECT * FROM answer";
+    //language=SQL
+    private static final String SQL_SELECT_BY_QUESTION_ID = "SELECT * FROM answer WHERE question_id = :id";
     @Override
     public Optional<Answer> findById(Long id) {
         Map<String,Long> params = new HashMap<>();
@@ -33,7 +35,7 @@ public class AnswerDaoImpl extends AbstractDao<Answer> implements AnswerDao {
         Map<String,Object> params = new HashMap<>();
         params.put("questionId",model.getQuestionId());
         params.put("text",model.getAnswerText());
-        params.put("isCorrect",model.isStatus());
+        params.put("isCorrect",model.isRight());
         return save(SQL_INSERT_INTO_ANSWER,params);
     }
 
@@ -50,6 +52,12 @@ public class AnswerDaoImpl extends AbstractDao<Answer> implements AnswerDao {
     @Override
     public List<Answer> findAll() {
         return findAll(SQL_SELECT_ALL,answerRowMapper());
+    }
+
+    @Override
+    public List<Answer> getAnswersByQuestionId(Long id) {
+        Map<String,Long> params = new HashMap<>();
+        return namedParameterJdbcTemplate.query(SQL_SELECT_BY_QUESTION_ID,params,answerRowMapper());
     }
 
     private RowMapper<Answer> answerRowMapper(){

@@ -21,7 +21,7 @@ $(function () {
                         "<input hidden name='answers["+answerNumber+"].answerNumber' value='"+answerNumber+"'/>"+
 
                         "<textarea placeholder='question' name='questions[" + questionNumber + "].text'/><br>" +
-                        "<input type='checkbox' id='answer_id"+answerNumber+"' name='answers[" + answerNumber + "].status'/>" +
+                        "<input type='checkbox' id='answer_id"+answerNumber+"' name='answers[" + answerNumber + "].right'/>" +
                         "<label for='answer_id"+answerNumber+"'></label>" +
                         "<input type='text' placeholder='answer' name='answers[" + answerNumber++ + "].answerText'/>" +
                         "<input type='button' value='-'><br>" +
@@ -37,7 +37,7 @@ $(function () {
         var html2Add =
             "<input hidden name='answers["+answerNumber+"].questionNumber' value='"+questionNumber+"'>"+
             "<input hidden name='answers["+answerNumber+"].answerNumber' value='"+answerNumber+"'/>"+
-            "<input type='checkbox' id='answer_id" + answerNumber + "' name='answers[" + answerNumber + "].status'/>" +
+            "<input type='checkbox' id='answer_id" + answerNumber + "' name='answers[" + answerNumber + "].right'/>" +
             "<label for='answer_id"+answerNumber+"'></label>" +
             "<input type='text' placeholder='answer' name='answers[" + answerNumber++ + "].answerText'/>" +
             "<input type='button' value='-'><br>" ;
