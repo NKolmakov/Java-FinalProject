@@ -54,6 +54,8 @@ public class AuthorizationController {
                     return "redirect:/tutor";
                 }
             }
+        }else{
+            modelMap.addAttribute("error","true");
         }
         return "authorization";
     }

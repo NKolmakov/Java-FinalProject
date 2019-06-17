@@ -23,6 +23,11 @@
     </div>
     <div>
         <form action="signIn" method="post">
+            <c:if test="${error.equalsIgnoreCase('true')}">
+                <div>
+                    <p style="color: #ff0000; font-size: 15px;"><locale:message code="label.authorizaitonError"/></p>
+                </div>
+            </c:if>
             <input type="text" id="login" name="login" placeholder="<locale:message code="label.login"/>" required/>
             <input type="password" id="password" name="password" placeholder="<locale:message code="label.password"/>" required/>
             <input type="submit" value="<locale:message code="button.enter"/>"/>

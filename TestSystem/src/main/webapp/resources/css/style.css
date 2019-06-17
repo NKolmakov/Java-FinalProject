@@ -636,6 +636,29 @@ hr {
     background-color: #dadada;
 }
 
+.question .removeQuestion{
+    -moz-box-shadow: inset 0px 1px 0px 0px #45d6b8;
+    -webkit-box-shadow: inset 0px 1px 0px 0px #41d6b8;
+    box-shadow: inset 0px 1px 0px 0px #3bd6b7;
+    background-color: #34bba3;
+    border: 1px solid #24a08d;
+    display: inline-block;
+    cursor: pointer;
+    color: #FFFFFF;
+    font-family: 'Open Sans Condensed', sans-serif;
+    font-size: 14px;
+    padding: 8px 18px;
+    text-decoration: none;
+    text-transform: uppercase;
+    margin: 1em;
+}
+
+.question .removeQuestion input[type=button]:hover,
+.question .removeAnswer input[type = button]:hover{
+    background: linear-gradient(to bottom, #24d6bd 5%, #2da091 100%);
+    background-color: rgba(255, 22, 12, 0.69);
+}
+
 h4 {
     background: #a4d6d5;
     font-family: 'Open Sans Condensed', sans-serif;
@@ -654,7 +677,7 @@ h4 {
     margin-bottom: 13px;
     margin-left: 6px;
     font: 16px Arial, Helvetica, sans-serif;
-    height: 45px;
+    height: 70px;
     resize: none;
 }
 
