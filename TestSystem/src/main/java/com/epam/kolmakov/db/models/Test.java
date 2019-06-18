@@ -13,6 +13,8 @@ public class Test {
     private Long id;
     private String name;
     private String description;
+    private Long subjectId;
+    private Subject subject;
     private List<Question> questions;
 
     public Test(String name, String description, List<Question> questions) {
@@ -26,9 +28,10 @@ public class Test {
         this.description = description;
     }
 
-    public Test(Long id, String name, String description) {
+    public Test(Long id, String name, String description, Long subjectId) {
         this.id = id;
         this.name = name;
         this.description = description;
+        this.subjectId = subjectId;
     }
 }

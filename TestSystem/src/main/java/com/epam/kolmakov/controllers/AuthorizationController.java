@@ -44,18 +44,18 @@ public class AuthorizationController {
     public String signIn(UserForm userForm, ModelMap modelMap, HttpSession session) {
         User user = User.from(userForm);
         Optional<User> optionalAuthorizedUser = userService.checkAuthorization(user);
-        if(optionalAuthorizedUser.isPresent()) {
+        if (optionalAuthorizedUser.isPresent()) {
             User authorizedUser = optionalAuthorizedUser.get();
             if (authorizedUser.isAuthorized()) {
                 session.setAttribute("user", authorizedUser);
                 if (authorizedUser.getRole().equalsIgnoreCase("student")) {
-                    return "redirect:/student";
+                    return "redirect:/student/mainStudent";
                 } else if (authorizedUser.getRole().equalsIgnoreCase("tutor")) {
-                    return "redirect:/tutor";
+                    return "redirect:/tutor/mainTutor";
                 }
             }
-        }else{
-            modelMap.addAttribute("error","true");
+        } else {
+            modelMap.addAttribute("error", "true");
         }
         return "authorization";
     }
@@ -71,10 +71,10 @@ public class AuthorizationController {
         List<Group> groups = groupService.getAllGroups();
         modelMap.addAttribute("groups", groups);
         if (userService.saveUser(user)) {
-            modelMap.addAttribute("error","false");
+            modelMap.addAttribute("error", "false");
             return "registration";
         } else {
-            modelMap.addAttribute("error","true");
+            modelMap.addAttribute("error", "true");
             return "registration";
         }
     }
@@ -86,8 +86,9 @@ public class AuthorizationController {
         return "registration";
     }
 
-    @RequestMapping(value = "/403")
-    public String getAccessDenied(){
-        return "403";
+    @RequestMapping(value = "/exit")
+    public String exit(HttpSession session) {
+        session.removeAttribute("user");
+        return "authorization";
     }
 }

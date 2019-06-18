@@ -1,18 +1,30 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: colma
-  Date: 01.06.2019
-  Time: 19:25
-  To change this template use File | Settings | File Templates.
---%>
+<%@taglib prefix="locale" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
     <title>Error</title>
+    <link href="<c:url value="/resources/css/style.css"/>" rel="stylesheet" type="text/css">
 </head>
 <body>
-    <div>
-        <h3>Unknown error</h3>
-    </div>
+<div class="error">
+    <img alt="sad_smile" src="<c:url value="/resources/images/sad_smile.png"/>">
+    <h1><locale:message code="label.errorMessage"/></h1>
+    <c:choose>
+        <c:when test="${user.role.equalsIgnoreCase('student')}">
+            <h3><a href="/student/mainStudent"><locale:message code="label.backToMain"/></a></h3>
+        </c:when>
+        <c:otherwise>
+            <c:choose>
+                <c:when test="${user.role.equalsIgnoreCase('tutor')}">
+                    <h3><a href="/tutor/mainTutor"><locale:message code="label.backToMain"/></a></h3>
+                </c:when>
+                <c:otherwise>
+                    <h3><a href="/authorization"><locale:message code="label.backToMain"/></a></h3>
+                </c:otherwise>
+            </c:choose>
+        </c:otherwise>
+    </c:choose>
+</div>
 </body>
 </html>

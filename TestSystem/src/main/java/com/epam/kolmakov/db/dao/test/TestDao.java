@@ -8,4 +8,5 @@ import java.util.List;
 public interface TestDao extends CrudDao<Test> {
     Long saveAndGetId(Test test);
     List<Test> getNotPassedTestsByUserId(Long id);
+    List<Test> getTestsBySubjectName(String name);
 }

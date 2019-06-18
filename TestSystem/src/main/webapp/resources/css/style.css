@@ -145,7 +145,7 @@ body {
     top: 0;
     left: 0;
     width: 30%;
-    height: 30%;
+    height: auto;
     padding: 30px;
     padding-top: 0px;
     background-color: white;
@@ -184,6 +184,25 @@ body {
     font-size: 30px;
     margin-top: 23%;
     margin-left: 7%;
+}
+
+.message form{
+    font-family: 'Open Sans Condensed', arial, sans;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 30%;
+    height: auto;
+    padding: 30px;
+    padding-top: 0px;
+    background-color: white;
+    background-size: cover;
+    background-repeat: no-repeat;
+    margin-top: 15%;
+    margin-left: 35%;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.22);
+    -moz-box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.22);
+    -webkit-box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.22);
 }
 
 #header-caption {
@@ -533,6 +552,7 @@ header {
 
 footer {
     bottom: 0;
+    left: 0;
     text-align: center;
     position: absolute;
     background-color: rgba(170, 170, 170, 1);
@@ -604,6 +624,33 @@ hr {
 .home-page input[type="submit"]:active {
     background: linear-gradient(to bottom, #2aa093 5%, #30c9b5 100%);
     background-color: #39cab9;
+}
+
+.test input[type="text"]{
+    margin-left: 6px;
+    width: 400px;
+    margin-bottom: 4px;
+    margin-right: 1px;
+    height: 45px;
+    padding: 2px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgb(54, 164, 160);
+    border-image: initial;
+    border-bottom: 1px solid rgb(54, 164, 160);
+    font: 16px Arial, Helvetica, sans-serif;
+}
+
+.test textarea{
+    width: 97%;
+    padding: 2px;
+    border: 1px solid #36A4A0;
+    border-bottom: 1px solid #36A4A0;
+    margin-bottom: 13px;
+    margin-left: 6px;
+    font: 16px Arial, Helvetica, sans-serif;
+    height: 70px;
+    resize: none;
 }
 
 #saveTest{
@@ -694,7 +741,7 @@ h4 {
 }
 
 .answers input[type="checkbox"] {
-    display: none
+    display: none;
 }
 
 .answers input[type="checkbox"]:checked + label {
@@ -822,4 +869,252 @@ h4 {
 
 .answer label {
     padding: 2000px;
+}
+
+/* new code*/
+
+.question,
+.question label {
+    margin: 30px 10px;
+    background-color: #dadada;
+}
+
+.answers input[type="checkbox"]:checked + label {
+    background: #009688;
+    border-color: #009688;
+}
+
+.answers input[type="checkbox"]:checked + label:after {
+    transform: scale(1.3);
+}
+
+.answers label {
+    display: block;
+    box-sizing: border-box;
+    width: 30px;
+    height: 30px;
+    background: #CCC;
+    border: 2px solid #7A7A7A;
+    border-radius: 10%;
+    position: absolute;
+    cursor: pointer;
+    transition: .2s;
+    margin-top: 5px;
+    margin-left: 6px;
+}
+
+.answers label:before{
+    content: '';
+    position: absolute;
+    display: block;
+    height: 300%;
+    width: 300%;
+    top: -100%;
+    left: -100%;
+    z-index: -1;
+    border-radius: 50%;
+    transition: .3s;
+}
+
+.answers label:after {
+    content: '';
+    display: block;
+    height: 100%;
+    width: 100%;
+    background: url(https://cbwconline.com/IMG/Codepen/Check.svg) center center no-repeat;
+    background-size: contain;
+    transform: scale(0);
+    transition: .2s;
+}
+
+.answers label:active:before {
+    background: #bfbfbf;
+}
+
+
+
+
+@keyframes click-wave {
+    0% {
+        height: 30px;
+        width: 30px;
+        opacity: 0.35;
+        position: relative;
+    }
+    100% {
+        height: 200px;
+        width: 200px;
+        margin-left: -80px;
+        margin-top: -80px;
+        opacity: 0;
+    }
+}
+
+.answer {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -ms-appearance: none;
+    -o-appearance: none;
+    appearance: none;
+    position: relative;
+    top: 13.33333px;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: 30px;
+    width: 30px;
+    transition: all 0.15s ease-out 0s;
+    background: #cbd1d8;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    display: inline-block;
+    margin-right: 0.5rem;
+    outline: none;
+    position: relative;
+    z-index: 1000;
+}
+.answer:hover {
+    background: #9faab7;
+}
+.answer:checked {
+    background: #40e0d0;
+}
+.answer:checked::before {
+    height: 30px;
+    width: 30px;
+    position: absolute;
+    content: '✔';
+    display: inline-block;
+    font-size: 26.66667px;
+    text-align: center;
+    line-height: 30px;
+}
+.answer:checked::after {
+    -webkit-animation: click-wave 0.65s;
+    -moz-animation: click-wave 0.65s;
+    animation: click-wave 0.65s;
+    background: #40e0d0;
+    content: '';
+    display: block;
+    position: relative;
+    z-index: 100;
+}
+.answer.radio {
+    border-radius: 50%;
+}
+.answer.radio::after {
+    border-radius: 50%;
+}
+
+.question div {
+    display: block;
+    line-height: 45px;
+}
+
+.settings{
+    position: absolute;
+    width: 150px;
+    padding: 6px 6px;
+    background: transparent;
+    cursor: pointer;
+    outline: none;
+    transition: all 0.3s ease-out;
+    margin-top: -45px;
+    margin-left: 84%;
+}
+
+.settings:after {
+    content: "";
+    width: 0;
+    height: 0;
+    position: absolute;
+    top: 50%;
+    right: 15px;
+    margin-top: -3px;
+    border-width: 6px 6px 0 6px;
+    border-style: solid;
+    border-color:  transparent;
+}
+
+.settings .dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: #fff;
+    border-radius: 0 0 5px 5px;
+    border: 1px solid rgba(0,0,0,0.2);
+    border-top: none;
+    border-bottom: none;
+    list-style: none;
+    transition: all 0.3s ease-out;
+    max-height: 0;
+    overflow: hidden;
+}
+
+.settings .dropdown li {
+    padding: 0 10px ;
+}
+
+.settings .dropdown li a {
+    display: block;
+    text-decoration: none;
+    color: #333;
+    padding: 10px 0;
+    transition: all 0.3s ease-out;
+    border-bottom: 1px solid #e6e8ea;
+}
+
+.settings .dropdown li:last-of-type a {
+    border: none;
+}
+
+.settings .dropdown li i {
+    margin-right: 5px;
+    color: inherit;
+    vertical-align: middle;
+}
+
+.settings .dropdown li:hover a {
+    color: #57a9d9;
+}
+
+.settings.active {
+    border-radius: 5px 5px 0 0;
+    background: #4cbeff;
+    box-shadow: none;
+    border-bottom: none;
+    color: white;
+}
+
+.settings.active:after {
+    border-color: #82d1ff transparent;
+}
+
+.settings.active .dropdown {
+    border-bottom: 1px solid rgba(0,0,0,0.2);
+    max-height: 300px;
+}
+
+.settings img{
+    height:40px;
+    weight:40px;
+}
+
+/*style for error.jsp*/
+
+.error img{
+    width: 300px;
+    height: 300px;
+    margin: 7% 35% 1%;
+}
+
+.error h1{
+    margin-left: 33%;
+    font-size: 40px;
+}
+
+.error h3{
+    margin-left: 37%;
 }

@@ -8,7 +8,7 @@
     <title><locale:message code="title.name"/></title>
     <link href="<c:url value="/resources/css/style.css"/>" rel="stylesheet" type="text/css">
     <script src="<c:url value="/resources/js/script.js"/>"></script>
-    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <meta charset="UTF-8">
 </head>
 
@@ -17,20 +17,20 @@
     <div>
         <h2><locale:message code="formReg.name"/></h2>
         <div class="lang">
-            <a href="${pageContext.request.contextPath}?lang=en"><img id="en" src="/resources/images/eng.png"></a>
-            <a href="${pageContext.request.contextPath}?lang=ru"><img id="ru" src="/resources/images/rus.jpg"></a>
+            <a href="${pageContext.request.contextPath}?lang=en"><img alt="en" id="en" src="<c:url value="/resources/images/eng.png"/>"></a>
+            <a href="${pageContext.request.contextPath}?lang=ru"><img alt="ru" id="ru" src="<c:url value="/resources/images/rus.jpg"/>"></a>
         </div>
     </div>
     <div>
         <form action="signUp" method="post">
             <c:if test="${error.equalsIgnoreCase('true')}">
                 <div>
-                    <p style="color: #ff0000; font-size: 15px;"><locale:message code="label.registrationFailed"/> </p>
+                    <p style="color: #ff0000; font-size: 18px;"><locale:message code="label.registrationFailed"/> </p>
                 </div>
             </c:if>
             <c:if test="${error.equalsIgnoreCase('false')}">
                 <div>
-                    <p style="color: #00ff00; font-size: 15px;"><locale:message code="label.registrationSuccess"/> </p>
+                    <p style="color: #00ff00; font-size: 18px;"><locale:message code="label.registrationSuccess"/> </p>
                 </div>
             </c:if>
             <input type="text" id="firstName" name="firstName" placeholder="<locale:message code="label.firstName"/>" required/>
@@ -48,5 +48,4 @@
     <p><locale:message code="label.hasAccount"/><a href="authorization"><locale:message code="label.logIn"/></a></p>
 </div>
 </body>
-
 </html>

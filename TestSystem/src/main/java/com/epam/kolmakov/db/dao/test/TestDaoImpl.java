@@ -18,10 +18,16 @@ public class TestDaoImpl extends AbstractDao<Test> implements TestDao {
     private static final String SQL_SELECT_TEST_BY_ID = "SELECT * FROM test WHERE id = :id";
     //language=sql
     private static final String SQL_INSERT_INTO_TEST = "INSERT " +
-            "INTO test(name, description)" +
-            "VALUES (:testName,:description)";
+            "INTO test(name, description,subject_id)" +
+            "VALUES (:testName,:description,:subjectId)";
     //language=sql
     private static final String SQL_SELECT_ALL = "SELECT * FROM test";
+    //language=sql
+    private static final String SQL_SELECT_BY_SUBJECT_ID = "SELECT * FROM test WHERE subject_id=:id";
+    //language=sql
+    private static final String SQL_SELECT_BY_SUBJECT_NAME = "SELECT t.id, t.name, description, subject_id " +
+            "FROM test t " +
+            "INNER JOIN subject s on t.subject_id = s.id WHERE s.name = :name";
 
     @Override
     public Optional<Test> findById(Long id) {
@@ -35,6 +41,7 @@ public class TestDaoImpl extends AbstractDao<Test> implements TestDao {
         Map<String,Object> params = new HashMap<>();
         params.put("testName",model.getName());
         params.put("description",model.getDescription());
+        params.put("subjectId",model.getSubject().getId());
         return save(SQL_INSERT_INTO_TEST,params);
     }
 
@@ -66,10 +73,18 @@ public class TestDaoImpl extends AbstractDao<Test> implements TestDao {
     }
 
     @Override
+    public List<Test> getTestsBySubjectName(String name) {
+        Map<String,String> params = new HashMap<>();
+        params.put("name",name);
+        return namedParameterJdbcTemplate.query(SQL_SELECT_BY_SUBJECT_NAME,params,testRowMapper());
+    }
+
+    @Override
     public Long saveAndGetId(Test test) {
         MapSqlParameterSource parameterSource = new MapSqlParameterSource();
         parameterSource.addValue("testName",test.getName());
         parameterSource.addValue("description",test.getDescription());
+        parameterSource.addValue("subjectId",test.getSubject().getId());
         return saveAndGetId(SQL_INSERT_INTO_TEST,parameterSource);
     }
 
@@ -78,7 +93,8 @@ public class TestDaoImpl extends AbstractDao<Test> implements TestDao {
             Test test = new Test(
                     resultSet.getLong("id"),
                     resultSet.getString("name"),
-                    resultSet.getString("description")
+                    resultSet.getString("description"),
+                    resultSet.getLong("subject_id")
             );
             return test;
         };

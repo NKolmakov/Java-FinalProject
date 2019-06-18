@@ -1,5 +1,6 @@
 package com.epam.kolmakov.config;
 
+import com.epam.kolmakov.interceptiors.AuthorizationInterceptor;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -54,5 +55,13 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(localeChangeInterceptor).addPathPatterns("/*");
+
+        registry.addInterceptor(new AuthorizationInterceptor())
+                .addPathPatterns("/student/*")
+                .excludePathPatterns("/resources/**");
+
+        registry.addInterceptor(new AuthorizationInterceptor())
+                .addPathPatterns("/tutor/*")
+                .excludePathPatterns("/resources/**");
     }
 }

@@ -52,7 +52,7 @@ public class TestService {
     }
 
     /**
-     * <p>Method to get test from database</p>
+     * <p>Method to get test from database. It returns test as object with it's questions and answers</p>
      *
      * @param id - test identifier
      * @return <i>Optional test</i> with it's questions and answers or <i>Optional.empty</i> if no test exists
@@ -100,6 +100,18 @@ public class TestService {
             }
         }
         return ready2PassTests;
+    }
+
+    public List<Test> getTestsBySubjectName(String name){
+        List<Test> testListFromDb = testDaoImpl.getTestsBySubjectName(name);
+        List<Test> filledTests = new ArrayList<>();
+        for (Test test:testListFromDb){
+            Optional<Test> optionalTest = getTestById(test.getId());
+            if(optionalTest.isPresent()){
+                filledTests.add(optionalTest.get());
+            }
+        }
+        return filledTests;
     }
 
 

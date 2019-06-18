@@ -17,6 +17,7 @@ import java.util.List;
 public class CreateTestForm {
     private String testName;
     private String testDescription;
+    private String subjectName;
     private List<Question> questions;
     private List<Answer> answers;
 

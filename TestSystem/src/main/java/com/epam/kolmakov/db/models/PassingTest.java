@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -11,6 +13,7 @@ public class PassingTest {
     private Long id;
     private Long testId;
     private Long userId;
+    private List<Answer> answers;
     private Short rightQuestionsAmount;
     private Short wrongQuestionsAmount;
     private Test test;
