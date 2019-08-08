@@ -8,8 +8,7 @@ import javax.servlet.Filter;
 public class AppInit extends AbstractAnnotationConfigDispatcherServletInitializer{
     protected Class<?>[] getRootConfigClasses() {
         return new Class<?>[]{
-                WebConfig.class,
-               // SecurityConfig.class
+                WebConfig.class
         };
     }
 
@@ -28,11 +27,4 @@ public class AppInit extends AbstractAnnotationConfigDispatcherServletInitialize
                 new CharacterEncodingFilter("UTF-8")
         };
     }
-    //todo: сделать сообщение о сохранении теста у тьютора
-    //todo: сделать статистику
-    //todo: сделать отдельный модуль генерации пароля тьютора
-
-
-    //todo: ВАЖНАЯ ЧАСТЬ
-    //todo: сделать обзор тестов у тьютора
 }

@@ -5,7 +5,7 @@
 <head>
     <title><locale:message code="title.name"/></title>
     <link href="<c:url value="/resources/css/style.css"/>" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+    <link rel="stylesheet" href="<c:url value="/resources/css/normalize.min.css"/>">
 </head>
 <body>
 <c:if test="${selectSubject.equalsIgnoreCase('true')}">

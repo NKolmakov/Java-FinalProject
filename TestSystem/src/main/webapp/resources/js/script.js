@@ -22,7 +22,7 @@ $(function () {
                         "<input hidden name='answers[" + answerNumber + "].answerNumber' value='" + answerNumber + "'/>" +
                         "<input hidden type='checkbox' id='answer_id" + answerNumber + "' name='answers[" + answerNumber + "].right'/>" +
                         "<label id='label_id" + answerNumber + "' for='answer_id" + answerNumber + "'></label>" +
-                        "<input type='text' id='text_id" + answerNumber + "' placeholder='answer' name='answers[" + answerNumber + "].answerText' maxlength='40' required/>" +
+                        "<input type='text' id='text_id" + answerNumber + "' placeholder='answer' name='answers[" + answerNumber + "].answerText' maxlength='100' required/>" +
                         "<input hidden value='"+answerNumber++ +"'/>"+
                     "</div>" +
                 "<input type='button' id='" + questionNumber + "' class='createAnswer' value ='" + document.getElementById("button.addAnswer").value + "'/><br>" +
@@ -40,7 +40,7 @@ $(function () {
             "<input hidden name='answers[" + answerNumber + "].answerNumber' value='" + answerNumber + "'/>" +
             "<input hidden type='checkbox' id='answer_id" + answerNumber + "' name='answers[" + answerNumber + "].right'/>" +
             "<label id='label_id" + answerNumber + "' for='answer_id" + answerNumber + "'></label>" +
-            "<input type='text' id='text_id" + answerNumber + "' placeholder='answer' name='answers[" + answerNumber + "].answerText' maxlength='40' required/>" +
+            "<input type='text' id='text_id" + answerNumber + "' placeholder='answer' name='answers[" + answerNumber + "].answerText' maxlength='100' required/>" +
             "<input type='button' id='" + answerNumber + "' class='removeAnswer' value='-'><br>" +
             "<input hidden value='"+answerNumber++ +"'/>"+
             "</div>";
@@ -77,3 +77,62 @@ $(function () {
         }
     })
 });
+
+var index=0;
+
+$(function () {
+    $(".test").on("click", ".answerRadio", function () {
+        var element = $(this);
+        var ansId = $(this).attr("id");
+        var questId = $(this).val();
+        var num = ansId.replace('radio_','');
+        var html2add="<input hidden name='radioAns["+ index +"].answerId' value='"+num+"'/>" +
+            "<input hidden name='radioAns["+ index +"].questionId' value='"+questId+"'";
+        $(".question").append(html2add);
+        index++;
+    })
+});
+
+// $(function () {
+//     $(".test").on("click", ".answerCheckbox", function () {
+//         var element = $(this);
+//         var ansId = $(this).attr("id");
+//         var num = ansId.replace('check_','');
+//         var html2add="<input hidden name='radioAns["+ ++index +"]' value='"+num+"'/>";
+//         $(".question").append(html2add);
+//     })
+// });
+
+
+// $(function () {
+//     $(".test").on('click',".answerRadio",function () {
+//         var element = $(this);
+//         var ansId = $(this).attr("id");
+//         var num = ansId.replace('radio_','');
+//         console.log("num : "+num);
+//         if(array.indexOf(num) == -1){
+//             array.slice(array.indexOf(num),1);
+//         }else{
+//             array.push(num);
+//         }
+//
+//         $("#idList").val(array);
+//     })
+//     $(".test").on('click',".answerCheckbox",function () {
+//         var element = $(this);
+//         var ansId = $(this).attr("id");
+//         var num = ansId.replace('radio_','');
+//         console.log("num : "+num);
+//         if(array.indexOf(num) == -1){
+//             array.slice(array.indexOf(num),1);
+//         }else{
+//             array.push(num);
+//         }
+//
+//         $("#idList").val(array);
+//     })
+//
+//
+//
+// });
+

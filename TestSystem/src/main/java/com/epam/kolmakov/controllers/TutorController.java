@@ -25,24 +25,24 @@ public class TutorController {
     private SubjectService subjectService;
 
     @RequestMapping(value = "/mainTutor")
-    public String getMainTutorForm(HttpSession session, ModelMap modelMap){
+    public String getMainTutorForm(HttpSession session, ModelMap modelMap) {
         User user = (User) session.getAttribute("user");
-        modelMap.addAttribute("user",user);
+        modelMap.addAttribute("user", user);
         return "mainTutor";
     }
 
     @RequestMapping(value = "/createTest")
-    public String getCreateTestPage(){
+    public String getCreateTestPage() {
         return "createTest";
     }
 
-    @RequestMapping(value = "/saveTest",method = RequestMethod.POST)
-    public String return2MainTutorPage(@ModelAttribute(name = "createTestForm") CreateTestForm createTestForm,ModelMap modelMap){
-        Test test = new Test(createTestForm.getTestName(),createTestForm.getTestDescription());
+    @RequestMapping(value = "/saveTest", method = RequestMethod.POST)
+    public String return2MainTutorPage(@ModelAttribute(name = "createTestForm") CreateTestForm createTestForm, ModelMap modelMap) {
+        Test test = new Test(createTestForm.getTestName(), createTestForm.getTestDescription());
         test.setQuestions(createTestForm.getQuestions());
-        for (Question question:test.getQuestions()){
+        for (Question question : test.getQuestions()) {
             List<Answer> answers = new ArrayList<>();
-            for (Answer answer:createTestForm.getAnswersByQuestionNumber(question.getNumber())){
+            for (Answer answer : createTestForm.getAnswersByQuestionNumber(question.getNumber())) {
                 answers.add(answer);
             }
             question.setAnswers(answers);
@@ -51,13 +51,13 @@ public class TutorController {
         Long subjectId = subjectService.saveAndGetId(subject);
         test.setSubjectId(subjectId);
         Optional<Subject> optionalSubject = subjectService.getSubjectById(test.getSubjectId());
-        if(optionalSubject.isPresent()){
+        if (optionalSubject.isPresent()) {
             test.setSubject(optionalSubject.get());
         }
-        if(testService.saveTest(test)) {
-            modelMap.addAttribute("save","true");
-        }else{
-            modelMap.addAttribute("save","false");
+        if (testService.saveTest(test)) {
+            modelMap.addAttribute("save", "true");
+        } else {
+            modelMap.addAttribute("save", "false");
         }
         return "mainTutor";
     }

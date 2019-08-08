@@ -24,7 +24,7 @@ public class CreateTestForm {
     public List<Answer> getAnswersByQuestionNumber(Integer questionNumber){
         List<Answer> answerList = new ArrayList<>();
         for (Answer answer:answers){
-            if(answer.getQuestionNumber().equals(questionNumber)){
+            if(answer.getQuestionNumber() != null && answer.getQuestionNumber().equals(questionNumber)){
                 answerList.add(answer);
             }
         }

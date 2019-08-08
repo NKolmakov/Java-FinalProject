@@ -60,17 +60,18 @@ public abstract class AbstractDao<T> {
 
     /**
      * Return index of last created object
-     * @param sql - query to insert object to database
+     *
+     * @param sql    - query to insert object to database
      * @param params - params for query
      * @return last index or -1 if no index found
      */
-    protected Long saveAndGetId(String sql, MapSqlParameterSource params){
+    protected Long saveAndGetId(String sql, MapSqlParameterSource params) {
         GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
-        namedParameterJdbcTemplate.update(sql,params,keyHolder);
+        namedParameterJdbcTemplate.update(sql, params, keyHolder);
         long result = -1L;
         try {
             result = keyHolder.getKey().longValue();
-        }catch (NullPointerException ex){
+        } catch (NullPointerException ex) {
             WebConfig.LOGGER.warn(ex);
         }
         return result;

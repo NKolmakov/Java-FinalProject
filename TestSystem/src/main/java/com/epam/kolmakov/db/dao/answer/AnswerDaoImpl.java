@@ -23,6 +23,8 @@ public class AnswerDaoImpl extends AbstractDao<Answer> implements AnswerDao {
     private static final String SQL_SELECT_ALL = "SELECT * FROM answer";
     //language=SQL
     private static final String SQL_SELECT_BY_QUESTION_ID = "SELECT * FROM answer WHERE question_id = :id";
+    //language=SQL
+    private static final String SQL_UPDATE_ANSWER = "UPDATE answer a LEFT JOIN question WHERE id =:id";
     @Override
     public Optional<Answer> findById(Long id) {
         Map<String,Long> params = new HashMap<>();

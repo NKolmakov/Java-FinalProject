@@ -2,10 +2,7 @@ package com.epam.kolmakov.controllers;
 
 import com.epam.kolmakov.db.models.*;
 import com.epam.kolmakov.forms.AnswerLogForm;
-import com.epam.kolmakov.services.AnswerLogService;
-import com.epam.kolmakov.services.PassingTestService;
-import com.epam.kolmakov.services.SubjectService;
-import com.epam.kolmakov.services.TestService;
+import com.epam.kolmakov.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -32,6 +29,8 @@ public class StudentController {
     private PassingTestService passingTestService;
     @Autowired
     private SubjectService subjectService;
+    @Autowired
+    private AnswerService answerService;
 
     @RequestMapping(value = "/mainStudent")
     public String getMainStudentForm(HttpSession session, ModelMap modelMap) {
@@ -58,6 +57,7 @@ public class StudentController {
         if (optionalTest.isPresent()) {
             Test test = optionalTest.get();
             modelMap.addAttribute("counter", -1);
+            modelMap.addAttribute("radioAns", -1);
             modelMap.addAttribute("test", test);
             return "passTest";
         }
@@ -89,28 +89,53 @@ public class StudentController {
     }
 
     @RequestMapping(value = "/passTest")
-    public String takeTest(@ModelAttribute(name = "answerLogForm") AnswerLogForm answerLogForm, String t, HttpSession session, ModelMap modelMap) {
-        modelMap.addAttribute("answerLogForm", answerLogForm);
-        List<Answer> answerList = answerLogForm.getAnswers();
+    public String takeTest(@ModelAttribute(name = "answerLogForm") AnswerLogForm answerLogForm, HttpSession session, ModelMap modelMap) {
         List<Answer> answers = new ArrayList<>();
+        PassingTest passingTest = new PassingTest();
 
-        //some of answers have null-fields. They have to be removed
-        for (Answer answer : answerList) {
-            if (answer.getAnswerId() != null) {
-                answers.add(answer);
+        //empty list with only radio answers id
+        List<Answer> radioAnswers = answerLogForm.getRadioAns();
+        List<Answer> answerList = answerLogForm.getAnswers();
+        List<Long> notRepeatedId = new ArrayList<>();
+
+        if (radioAnswers != null) {
+            for (Answer answer : radioAnswers) {
+                if (answer.getAnswerId() != null && !notRepeatedId.contains(answer.getAnswerId())) {
+                    notRepeatedId.add(answer.getAnswerId());
+                }
+
             }
         }
-        Long testId = answerLogForm.getTestId();
-        Optional<Test> optionalTest = testService.getTestById(testId);
+        List<Answer> allSetOfAnswers = new ArrayList<>();
+        for (Answer answer : answerList) {
+            boolean added = false;
+            for (Long empty : notRepeatedId) {
+                if (answer.getAnswerId() == empty) {
+                    allSetOfAnswers.add(answer);
+                    added = true;
+                } else {
+                    Optional<Answer> optionalAnswer = answerService.getAnswerById(empty);
+                    if (optionalAnswer.isPresent()) {
+                        Answer answer1 = optionalAnswer.get();
+                        answer1.setChecked(true);
+                        allSetOfAnswers.add(optionalAnswer.get());
+                    }
+                }
+            }
+            if (!added) {
+                allSetOfAnswers.add(answer);
+            }
+        }
         User user = (User) session.getAttribute("user");
+        Long testId = answerLogForm.getTestId();
 
-        for (Answer answer : answers) {
+        for (Answer answer : allSetOfAnswers) {
             AnswerLog answerLog = new AnswerLog(answer.getAnswerId(), answer.isChecked());
             answerLogService.saveAnswerLog(answerLog);
         }
 
-        PassingTest passingTest = new PassingTest();
-        passingTest.setAnswers(answers);
+        Optional<Test> optionalTest = testService.getTestById(testId);
+        passingTest.setAnswers(allSetOfAnswers);
         passingTest.setTestId(testId);
         if (user != null) {
             Long userId = user.getId();

@@ -37,9 +37,7 @@ public class UserService {
             user.setRole(Roles.STUDENT.toString());
             String encodedPassword = encoder.encode(user.getPassword());
             user.setPassword(encodedPassword);
-            if(userDaoImpl.save(user)) {
-                return true;
-            }
+            return userDaoImpl.save(user);
         }
 
         return false;
@@ -58,11 +56,7 @@ public class UserService {
     }
 
     private boolean userExists(User user) {
-        if(userDaoImpl.findUserByLogin(user.getLogin()).isPresent()){
-            return true;
-        }
-
-        return false;
+        return userDaoImpl.findUserByLogin(user.getLogin()).isPresent();
     }
 
     public Optional<User> checkAuthorization(User user) {

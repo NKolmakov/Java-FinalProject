@@ -7,7 +7,7 @@
 <head>
     <title></title>
     <link href="<c:url value="/resources/css/style.css"/>" rel="stylesheet" type="text/css">
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="<c:url value="/resources/js/jquery-3.2.1.js"/>"></script>
     <script src="<c:url value="/resources/js/script.js"/>"></script>
 </head>
 <body>
@@ -18,68 +18,40 @@
     <form action="/student/passTest" method="post" name="answerLogForm" modelAttribute="answerLogForm">
         <input hidden name="testId" value="${test.id}">
         <c:forEach items="${test.questions}" var="question">
-        <div class="question">
-            <input hidden value="${counter = counter+1}"/>
-            <h4> ${question.text}</h4><br>
-            <input hidden id="${question.id}">
-            <c:forEach items="${question.answers}" var="answer" varStatus="status">
-                <c:choose>
-                    <c:when test="${!question.manyRightAnswers}">
+            <div class="question">
+                <input hidden value="${counter = counter+1}"/>
+                <h4> ${question.text}</h4><br>
+<%--                <input hidden id="${question.id}">--%>
+                <c:forEach items="${question.answers}" var="answer" varStatus="status">
+                    <c:if test="${question.manyRightAnswers}">
                         <div>
-                        <input hidden value="${status.count}">
-                        <input hidden name="answers[${counter}].questionId" value="${question.id}">
-                        <input hidden name="answers[${counter}].answerId" value="${answer.answerId}">
-                        <input hidden name="answers[${counter}].right" value="${answer.right}"/>
-                        <input type="radio" class="answer radio" id="${answer.answerId}" name="answers[${counter}].checked">${answer.answerText}<br>
-                        <input hidden value="${counter = counter+1}"/>
+                            <input hidden value="${status.count}">
+                            <input hidden name="answers[${counter}].questionId" value="${question.id}">
+                            <input hidden name="answers[${counter}].answerId" value="${answer.answerId}">
+                            <input hidden name="answers[${counter}].right" value="${answer.right}"/>
+                            <input type="checkbox" id="check_${answer.answerId}" class="answerCheckbox"
+                                   name="answers[${counter}].selected">${answer.answerText}<br>
+                            <c:if test="${!status.last}">
+                                <input hidden value="${counter = counter+1}"/>
+                            </c:if>
                         </div>
-                    </c:when>
-                    <c:otherwise>
+                    </c:if>
+                    <c:if test="${!question.manyRightAnswers}">
                         <div>
-                        <input hidden value="${status.count}">
-                        <input hidden name="answers[${counter}].questionId" value="${question.id}"/>
-                        <input hidden name="answers[${counter}].answerId" value="${answer.answerId}"/>
-                        <input hidden name="answers[${counter}].right" value="${answer.right}"/>
-                        <input type="checkbox" class="answer checkbox" id="${answer.answerId}" name="answers[${counter}].checked"/>${answer.answerText}<br>
-                        <input hidden value="${counter = counter+1}"/>
+                            <input hidden value="${status.count}">
+                            <input hidden name="answers[${counter}].questionId" value="${question.id}"/>
+                            <input hidden name="answers[${counter}].answerId" value="${answer.answerId}"/>
+                            <input hidden name="answers[${counter}].right" value="${answer.right}"/>
+                            <input hidden id="answ_${answer.answerId}" name="answers[${counter}].selected" value =""/>
+                            <input id="radio_${answer.answerId}" type="radio" class="answerRadio"
+                                   name="answers_id[${counter}]" value="${question.id}"/>${answer.answerText}<br>
                         </div>
-                    </c:otherwise>
-                </c:choose>
-            </c:forEach>
-        </div><hr>
-            </c:forEach>
-                <%--                <c:forEach items="${question.answers}" var="answer" varStatus="status">--%>
-                <%--                    <c:choose>--%>
-                <%--                        <c:when test="${!question.manyRightAnswers}">--%>
-                <%--&lt;%&ndash;                            <div>&ndash;%&gt;--%>
-                <%--                                <input hidden name="answers[${counter}].questionId" value="${question.id}">--%>
-                <%--                                <input hidden name="answers[${counter}].answerId" value="${answer.answerId}">--%>
-                <%--                                <input hidden name="answers[${counter}].right" value="${answer.right}"/>--%>
-                <%--                                <input hidden id="some_${counter}" name="answers[${counter}].checked" value=""/>--%>
-                <%--                                <input class="answer radio" type="radio" id="${answer.answerId}"--%>
-                <%--                                       name="answers[${counter}].checked" value="true"/>--%>
-                <%--                            <input hidden value="${counter = counter+1}"/>--%>
-                <%--&lt;%&ndash;                                <label for="${answer.answerId}">${answer.answerText}</label><br>&ndash;%&gt;--%>
-                <%--&lt;%&ndash;                            </div>&ndash;%&gt;--%>
-                <%--                        </c:when>--%>
-                <%--                        <c:otherwise>--%>
-                <%--                            <div>--%>
-                <%--                                <input hidden name="answers[${counter}].questionId" value="${question.id}"/>--%>
-                <%--                                <input hidden name="answers[${counter}].answerId" value="${answer.answerId}"/>--%>
-                <%--                                <input hidden name="answers[${counter}].right" value="${answer.right}"/>--%>
-                <%--                                <input class="answer checkbox" type="checkbox" id="${answer.answerId}"--%>
-                <%--                                       name="answers[${counter}].checked"/>${answer.answerText}<br>--%>
-                <%--                                <c:if test="${!status.last}">--%>
-                <%--                                    <input hidden value="${counter = counter+1}"/>--%>
-                <%--                                </c:if>--%>
-                <%--                            </div>--%>
-                <%--                        </c:otherwise>--%>
-                <%--                    </c:choose>--%>
-                <%--                </c:forEach>--%>
-                <%--            </div>--%>
-                <%--            <hr>--%>
-                <%--        </c:forEach>--%>
-            <input type="submit" value="Send test"/>
+                    </c:if>
+                </c:forEach>
+            </div>
+            <hr>
+        </c:forEach>
+        <input type="submit" value="<locale:message code="button.saveTest"/> ">
     </form>
 </div>
 <footer>

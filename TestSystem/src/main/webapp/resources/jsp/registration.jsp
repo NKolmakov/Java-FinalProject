@@ -7,8 +7,8 @@
 <head>
     <title><locale:message code="title.name"/></title>
     <link href="<c:url value="/resources/css/style.css"/>" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="<c:url value="/resources/js/jquery-3.2.1.js"/>"></script>
     <script src="<c:url value="/resources/js/script.js"/>"></script>
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <meta charset="UTF-8">
 </head>
 

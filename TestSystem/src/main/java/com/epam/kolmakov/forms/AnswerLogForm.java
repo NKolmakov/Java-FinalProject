@@ -8,5 +8,6 @@ import java.util.List;
 @Data
 public class AnswerLogForm {
     private List<Answer> answers;
+    private List<Answer> radioAns;
     private Long testId;
 }

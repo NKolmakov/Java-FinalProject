@@ -10,10 +10,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-//todo: fill
 @Component
 public class PassingTestDaoImpl extends AbstractDao<PassingTest> implements PassingTestDao {
-
     //language=SQL
     private static final String SQL_INSERT_INTO_PASSING_TEST = "INSERT " +
             "INTO passing_test(test_id, user_id,right_questions_amount,wrong_questions_amount)" +
@@ -29,8 +27,8 @@ public class PassingTestDaoImpl extends AbstractDao<PassingTest> implements Pass
         Map<String, Object> params = new HashMap<>();
         params.put("testId", model.getTestId());
         params.put("userId", model.getUserId());
-        params.put("rightQuestions",model.getRightQuestionsAmount());
-        params.put("wrongQuestions",model.getWrongQuestionsAmount());
+        params.put("rightQuestions", model.getRightQuestionsAmount());
+        params.put("wrongQuestions", model.getWrongQuestionsAmount());
         return save(SQL_INSERT_INTO_PASSING_TEST, params);
     }
 

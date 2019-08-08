@@ -63,21 +63,18 @@ public class TestService {
             Test test = optionalTest.get();
             List<Question> questions = questionDao.getQuestionsByTestId(id);
 
-            //for each found question look for questions
+            //for each found question look for answers
             for (Question question : questions) {
                 List<Answer> answers = answerDao.getAnswersByQuestionId(question.getId());
 
                 //if questions exist check quantity of right answers
                 byte rightAnsAmount = 0;
                 for (int i = 0; i < answers.size(); i++) {
-                    if (rightAnsAmount <= 1) {
-                        if (answers.get(i).isRight()) {
-                            rightAnsAmount++;
+                    if (answers.get(i).isRight()) {
+                        if (++rightAnsAmount > 1) {
+                            question.setManyRightAnswers(true);
+                            i = answers.size();
                         }
-                    } else {
-                        //kind of break for current loop
-                        i = answers.size();
-                        question.setManyRightAnswers(true);
                     }
                 }
                 question.setAnswers(answers);
@@ -95,19 +92,19 @@ public class TestService {
         //loop with tests form database which don't have any answers and questions
         for (Test test : testDaoImpl.getNotPassedTestsByUserId(user.getId())) {
             Optional<Test> optionalTest = getTestById(test.getId());
-            if (optionalTest.isPresent()){
+            if (optionalTest.isPresent()) {
                 ready2PassTests.add(optionalTest.get());
             }
         }
         return ready2PassTests;
     }
 
-    public List<Test> getTestsBySubjectName(String name){
+    public List<Test> getTestsBySubjectName(String name) {
         List<Test> testListFromDb = testDaoImpl.getTestsBySubjectName(name);
         List<Test> filledTests = new ArrayList<>();
-        for (Test test:testListFromDb){
+        for (Test test : testListFromDb) {
             Optional<Test> optionalTest = getTestById(test.getId());
-            if(optionalTest.isPresent()){
+            if (optionalTest.isPresent()) {
                 filledTests.add(optionalTest.get());
             }
         }
